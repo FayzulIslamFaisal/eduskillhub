@@ -8,19 +8,89 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  ADMIN
+  USER
+  INSTRUCTOR
+}
+
+model User {
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  firstName      String
+  lastName       String
+  email          String   @unique
+  password       String
+  phoneNumber    String  
+  bio            String
+  socialMedia    String[] @default([])
+  profilePicture String?
+  role           Role     @default(USER)
+  // one-to-Many relation via join table
+  coursesTeaching Course[]
+  testimonial Testimonial[]
+
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+
 model Course {
   id          String     @id @default(auto()) @map("_id") @db.ObjectId
   title       String
   description String
-  thumbnail   String
-  testimonial String[] @default([])
+  thumbnail   String?
+  testimonial Testimonial[]
   quizzes     String[] @default([])
-  instructor  String[] @default([])
-  category    String[] @default([])
   active      Boolean    @default(true)
   price       Int
-  modules     String[] @default([])
-  
+
+  modules     Module[]
+  instructorId String    @db.ObjectId
+  instructor   User      @relation(fields: [instructorId], references: [id])
+  categoryId  String     @db.ObjectId
+  category    Category   @relation(fields: [categoryId], references: [id])
+
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
+}
+
+model Category {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  thumbnail   String?
+
+  courses     Course[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Testimonial {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  rating    Int
+  comment   String?
+
+  userId    String   @db.ObjectId
+  user      User     @relation(fields: [userId], references: [id])
+  courseId  String   @db.ObjectId
+  course    Course   @relation(fields: [courseId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+model Module {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  description String
+  status    Boolean  @default(true)
+  slug String @unique
+  lessonIds String[] @default([])
+
+  courseId  String   @db.ObjectId
+  course    Course   @relation(fields: [courseId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
