@@ -7,3 +7,20 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
+model Course {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  thumbnail   String
+  testimonial String[] @default([])
+  quizzes     String[] @default([])
+  instructor  String[] @default([])
+  category    String[] @default([])
+  active      Boolean    @default(true)
+  price       Int
+  modules     String[] @default([])
+  
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
