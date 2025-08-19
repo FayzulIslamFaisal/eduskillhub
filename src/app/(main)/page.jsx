@@ -16,6 +16,10 @@ const HomePage = async () => {
     const courses = await getCourses();
     const categories  = await getCategories();
 
+    console.log("courses", courses);
+    // console.log("categories", categories);
+    
+
     return (
         <>
             <section className="space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32 grainy">
@@ -88,7 +92,7 @@ const HomePage = async () => {
                             >
                                 <div className="flex  flex-col gap-4 items-center justify-between rounded-md p-6">
                                     <Image
-                                        src={`/assets/images/categories/${category.thumbnail}`}
+                                        src={category?.thumbnail || "/placeholder.jpg"}
                                         alt={category.title}
                                         width={100}
                                         height={100}
