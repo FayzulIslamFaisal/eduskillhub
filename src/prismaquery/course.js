@@ -15,6 +15,12 @@ const getCourses = async () => {
         price: true,
         active: true,
         quizzes: true,
+        modules: {
+          select: { id: true }, 
+        },
+        category: {
+          select: { id: true, title: true },
+        },
       },
     }),
 

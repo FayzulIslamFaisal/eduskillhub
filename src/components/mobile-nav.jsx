@@ -2,7 +2,7 @@
 import Link from "next/link";
 
 import { cn } from "@/lib/utils";
-// import { useLockBody } from "@/hooks/use-lock-body";
+import { useLockBody } from "@/hooks/use-lock-body";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,7 +12,7 @@ import {
 import { Button, buttonVariants } from "./ui/button";
 
 export default function MobileNav({ items, children }) {
-  // useLockBody();
+  useLockBody();
 
   return (
     <div

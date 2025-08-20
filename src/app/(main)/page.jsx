@@ -90,14 +90,14 @@ const HomePage = async () => {
                                 key={category.id}
                                 className="relative overflow-hidden rounded-lg border bg-background p-2 hover:scale-105 transition-all duration-500 ease-in-out"
                             >
-                                <div className="flex  flex-col gap-4 items-center justify-between rounded-md p-6">
+                                <div className="flex relative w-full h-[150px]  flex-col gap-4 items-center justify-between rounded-md p-6">
                                     <Image
                                         src={category?.thumbnail || "/placeholder.jpg"}
                                         alt={category.title}
-                                        width={100}
-                                        height={100}
+                                        fill
+                                        className="object-cover"
                                     />
-                                    <h3 className="font-bold">
+                                    <h3 className="font-bold relative z-10">
                                         {category.title}
                                     </h3>
                                 </div>

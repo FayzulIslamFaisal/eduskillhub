@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-import MobileNav  from "@/components/mobile-nav";
+import  MobileNav  from "@/components/mobile-nav";
 import { Logo } from "./logo";
 import { X } from "lucide-react";
 import { Button, buttonVariants } from "./ui/button";
