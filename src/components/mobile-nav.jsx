@@ -11,7 +11,7 @@ import {
 } from "./ui/dropdown-menu";
 import { Button, buttonVariants } from "./ui/button";
 
-export function MobileNav({ items, children }) {
+export default function MobileNav({ items, children }) {
   // useLockBody();
 
   return (

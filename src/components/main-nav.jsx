@@ -4,11 +4,9 @@ import { useState } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-// import { MobileNav } from "@/components/mobile-nav";
+import MobileNav  from "@/components/mobile-nav";
 import { Logo } from "./logo";
-// import Image from "next/image";
 import { X } from "lucide-react";
-// import { Command } from "lucide-react";
 import { Button, buttonVariants } from "./ui/button";
 import { Menu } from "lucide-react";
 import {
@@ -42,9 +40,9 @@ export function MainNav({ items, children }) {
 					</nav>
 				) : null}
 
-				{/* {showMobileMenu && items && (
+				{showMobileMenu && items && (
 					<MobileNav items={items}>{children}</MobileNav>
-				)} */}
+				)}
 			</div>
 			<nav className="flex items-center gap-3">
 				<div className="items-center gap-3 hidden lg:flex">

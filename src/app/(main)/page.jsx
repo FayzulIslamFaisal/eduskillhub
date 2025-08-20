@@ -13,10 +13,10 @@ import getCategories from "@/prismaquery/category";
 
 const HomePage = async () => {
 
-    const courses = await getCourses();
+    const {courses, totalCount} = await getCourses();
     const categories  = await getCategories();
 
-    console.log("courses", courses);
+    console.log("totalCount==>", totalCount, "courses===>", courses);
     // console.log("categories", categories);
     
 
