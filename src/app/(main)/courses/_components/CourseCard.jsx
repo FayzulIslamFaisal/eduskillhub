@@ -22,7 +22,7 @@ const CourseCard = ({course}) => {
         <div className="text-lg mb-3 md:text-xl capitalize font-semibold group-hover:text-sky-700 line-clamp-2">
           {course?.title}
         </div>
-        <p className="text-xs text-white p-2 bg-slate-700 inline rounded-md">{course?.category?.title}</p>
+        <p className="text-basetext-slate-700">{course?.category?.title}</p>
         <div className="my-3 flex items-center gap-x-2 text-sm md:text-xs">
           <div className="flex items-center gap-3 text-black ">
             <div className="p-2 bg-slate-700 text-white rounded-lg">
