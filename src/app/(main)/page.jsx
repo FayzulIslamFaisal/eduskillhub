@@ -1,3 +1,4 @@
+
 import { SectionTitle } from "@/components/section-title";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -5,19 +6,24 @@ import { ArrowRightIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-// import { getCategories } from "@/queries/categories";
-// import { getCourseList } from "@/queries/courses";
-
 import CourseCard from "./courses/_components/CourseCard";
+import getCourses from "@/prismaquery/course";
+import getCategories from "@/prismaquery/category";
+
 
 const HomePage = async () => {
-    // const courses = await getCourseList();
-    // const categories = await getCategories();
+
+    const courses = await getCourses();
+    const categories  = await getCategories();
+
+    console.log("courses", courses);
+    // console.log("categories", categories);
+    
 
     return (
         <>
             <section className="space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32 grainy">
-                <div className="container flex max-w-[64rem] flex-col items-center gap-4 text-center relative isolate">
+                <div className="container mx-auto flex max-w-[64rem] flex-col items-center gap-4 text-center relative isolate">
                     <div
                         aria-hidden="true"
                         className="pointer-events-none absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
@@ -64,7 +70,7 @@ const HomePage = async () => {
             {/* Categories Section */}
             <section
                 id="categories"
-                className="container space-y-6  py-8  md:py-12 lg:py-24"
+                className="container mx-auto space-y-6  py-8  md:py-12 lg:py-24"
             >
                 <div className="flex items-center justify-between">
                     <SectionTitle>Categories</SectionTitle>
@@ -86,7 +92,7 @@ const HomePage = async () => {
                             >
                                 <div className="flex  flex-col gap-4 items-center justify-between rounded-md p-6">
                                     <Image
-                                        src={`/assets/images/categories/${category.thumbnail}`}
+                                        src={category?.thumbnail || "/placeholder.jpg"}
                                         alt={category.title}
                                         width={100}
                                         height={100}
@@ -104,7 +110,7 @@ const HomePage = async () => {
             {/* Courses */}
             <section
                 id="courses"
-                className="container space-y-6   md:py-12 lg:py-24"
+                className="container space-y-6 mx-auto  md:py-12 lg:py-24"
             >
                 <div className="flex items-center justify-between">
                     <SectionTitle>Courses</SectionTitle>
