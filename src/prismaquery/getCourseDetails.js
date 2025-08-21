@@ -56,7 +56,8 @@ export default async function getCourseDetails(id) {
                     phoneNumber: true,
                     bio: true,
                     profilePicture: true,
-                    socialMedia: true
+                    socialMedia: true,
+                    designation:true
                 },
             },
         }

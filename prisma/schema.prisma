@@ -43,6 +43,7 @@ model Course {
   price       Int
   subtitle    String?
   learning    String[] @default([])
+  duration Int
 
   testimonial Testimonial[]
   modules     Module[]
