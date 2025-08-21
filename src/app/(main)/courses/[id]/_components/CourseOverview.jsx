@@ -9,8 +9,8 @@ const CourseOverview = ({ course }) => {
                 <h4 className="text-2xl">What You will Learn?</h4>
                 <ul className="grid sm:grid-cols-2 grid-cols-1 gap-6">
                     {course?.learning &&
-                        course?.learning.map((learning) => (
-                            <li className="flex space-x-3">
+                        course?.learning.map((learning, index) => (
+                            <li className="flex space-x-3" key={index}>
                                 <div className="flex-none relative top-1">
                                     <CheckCheck />
                                 </div>

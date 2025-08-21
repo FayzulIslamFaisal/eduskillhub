@@ -7,7 +7,7 @@ import getCourseDetails from "@/prismaquery/getCourseDetails";
 
 const SingleCoursePage = async ({params: {id}}) => {
     const course = await getCourseDetails(id);
-    console.log("course===>", course);
+    // console.log("course===>", course);
     
     return (
         <>
@@ -18,7 +18,7 @@ const SingleCoursePage = async ({params: {id}}) => {
 
             <CourseDetails course={course} />
 
-            {course?.testimonials && <Testimonials testimonials={replaceMongoIdInArray(course?.testimonials)} />}
+            {course?.testimonial && <Testimonials testimonials={course?.testimonial} />}
 
             <RelatedCourses />
         </>

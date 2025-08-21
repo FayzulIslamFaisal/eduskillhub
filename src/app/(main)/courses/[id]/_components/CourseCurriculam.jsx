@@ -1,9 +1,9 @@
 
 import {
     Accordion,
-    AccordionContent,
     AccordionItem,
     AccordionTrigger,
+    AccordionContent,
   } from "@/components/ui/accordion";
 
   import { BookCheck } from "lucide-react";
@@ -22,9 +22,10 @@ import {
 
 const CourseCurriculam = ({course}) => {
     const totalDuration = course?.modules.reduce(function (acc, obj) { return acc + obj.duration; }, 0);
+    
     return (
         <>
-            <div class="flex gap-x-5 items-center justify-center flex-wrap mt-4 mb-6 text-gray-600 text-sm">
+            <div className="flex gap-x-5 items-center justify-center flex-wrap mt-4 mb-6 text-gray-600 text-sm">
                 <span className="flex items-center gap-1.5">
                     <BookCheck className="w-4 h-4" />
                     {course?.modules?.length} Chapters
@@ -37,19 +38,22 @@ const CourseCurriculam = ({course}) => {
 
             {/* contents */}
             <Accordion
-                defaultValue={["item-1", "item-2", "item-3"]}
-                type="multiple"
-                collapsible
-                className="w-full"
-            >
-                {
-                    course?.modules && course?.modules.map(module => (
-                        <CourseModuleList module={module} />
-                    ))
-                }
-
-
-            </Accordion>
+            type="single"
+            collapsible
+            className="w-full"
+        >
+            {course?.modules &&
+            course.modules.map((module) => (
+                <AccordionItem key={module.id} value={`module-${module.id}`}>
+                <AccordionTrigger className=" py-1 capitalize text-lg px-3 inline">{module?.title}</AccordionTrigger>
+                <AccordionContent>
+                    <p>{module.description}</p>
+                    {/* যদি চাইলে এখানে CourseModuleList ব্যবহার করতে পারো */}
+                    {/* <CourseModuleList module={module} /> */}
+                </AccordionContent>
+                </AccordionItem>
+            ))}
+        </Accordion>
         </>
     );
 };

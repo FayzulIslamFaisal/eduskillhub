@@ -9,9 +9,9 @@ import { SectionTitle } from "@/components/section-title";
 import { StarRating } from "@/components/star-rating";
 
 
-const Testimonials = ({testimonials}) => {
+const Testimonials = ({testimonials}) => {        
     return (
-        <section className="pb-8 md:pb-12 lg:pb-24">
+        <section className="pb-8 md:pb-10 lg:pb-12">
             <div className="container">
                 <SectionTitle className="mb-6">Testimonials</SectionTitle>
                 <Carousel
@@ -22,25 +22,25 @@ const Testimonials = ({testimonials}) => {
                 >
                     <CarouselPrevious />
                     <CarouselNext />
-                    <CarouselContent className="py-4">
+                    <CarouselContent className="py-4 ">
                         {testimonials.map((testimonial) => (
                             <CarouselItem
-                                key={testimonial.id}
-                                className="md:basis-1/2 lg:basis-1/3"
+                                key={testimonial?.id}
+                                className="md:basis-1/2 lg:basis-1/3 "
                             >
-                                <div className="sm:break-inside-avoid">
-                                    <blockquote className="rounded-lg bg-gray-50 p-6  sm:p-8 shadow-sm">
+                                <div className="sm:break-inside-avoid relative h-full rounded-lg bg-gray-50 p-6  sm:p-8 shadow-sm">
+                                    <blockquote className="">
                                         <div className="flex items-center gap-4">
                                             <img
-                                                alt=""
-                                                src={testimonial?.user?.profile_picture}
-                                                width="56"
-                                                height="56"
+                                                alt={testimonial?.user?.id}
+                                                src={testimonial?.user?.profilePicture}
+                                                width="100"
+                                                height="100"
                                                 className="size-14 rounded-full object-cover"
                                             />
                                             <div>
-                                                <p className="mt-0.5 text-lg font-medium text-gray-900">
-                                                {testimonial?.user?.first_name} {' '} {testimonial?.user?.last_name}
+                                                <p className="mt-0.5 text-lg mb-1 font-medium text-gray-900">
+                                                {testimonial?.user?.firstName} {' '} {testimonial?.user?.lastName}
                                                 </p>
                                                 <div className="flex justify-center gap-0.5 text-yellow-600">
                                                 <StarRating rating={testimonial?.rating} />
@@ -48,7 +48,7 @@ const Testimonials = ({testimonials}) => {
                                             </div>
                                         </div>
                                         <p className="mt-4 text-gray-700">
-                                            {testimonial?.content}
+                                            {testimonial?.comment}
                                         </p>
                                     </blockquote>
                                 </div>

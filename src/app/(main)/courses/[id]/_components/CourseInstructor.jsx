@@ -7,11 +7,13 @@ import { Star } from "lucide-react";
 
 const CourseInstructor = async ({course}) => {
     const instructor = course?.instructor;
+    console.log("instructor===>", instructor);
+    
 
     const fullName = `${instructor?.firstName}  ${instructor?.lastName}`;
     // const courseDetailsByInstructor = await getCourseDetailsByInstructor(instructor._id.toString());
 
-    console.log(courseDetailsByInstructor)
+    // console.log(courseDetailsByInstructor)
 
 
     return (
@@ -35,19 +37,23 @@ const CourseInstructor = async ({course}) => {
                         <ul className="list space-y-4">
                             <li className="flex items-center space-x-3">
                                 <Presentation className="text-gray-600" />
-                                <div>{courseDetailsByInstructor?.courses} Course(s)</div>
+                                {/* <div>{courseDetailsByInstructor?.courses} Course(s)</div> */}
+                                <div> Course(s)</div>
                             </li>
                             <li className="flex space-x-3">
                                 <UsersRound className="text-gray-600" />
-                                <div>{courseDetailsByInstructor?.enrollments} Student Learned</div>
+                                {/* <div>{courseDetailsByInstructor?.enrollments} Student Learned</div> */}
+                                <div> Student Learned</div>
                             </li>
                             <li className="flex space-x-3">
                                 <MessageSquare className="text-gray-600" />
-                                <div>{courseDetailsByInstructor?.reviews} Reviews</div>
+                                {/* <div>{courseDetailsByInstructor?.reviews} Reviews</div> */}
+                                <div> Reviews</div>
                             </li>
                             <li className="flex space-x-3">
                                 <Star className="text-gray-600" />
-                                <div>{courseDetailsByInstructor?.ratings} Average Rating</div>
+                                {/* <div>{courseDetailsByInstructor?.ratings} Average Rating</div> */}
+                                <div> Average Rating</div>
                             </li>
                         </ul>
                     </div>

@@ -6,15 +6,15 @@ import CourseCurriculam from "./CourseCurriculam";
 import CourseInstructor from "./CourseInstructor";
 
 const CourseDetails = ({course}) => {
-    const lastModifiedDate = formatMyDate(course.modifiedOn);
+    const lastModifiedDate = formatMyDate(course?.updatedAt);
 
     return (
-        <section className="py-8 md:py-12 lg:py-24">
+        <section className="py-8 md:py-10 lg:py-14">
             <div className="container">
-                <span className="bg-success py-0.5 px-0.5 rounded-full text-xs font-medium inline-block text-white">
+                <span className="bg-success capitalize py-0.5 px-0.5 rounded-full text-xs font-medium inline-block text-white">
                     {course?.category?.title}
                 </span>
-                <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold 2xl:text-5xl mt-3">
+                <h3 className="text-2xl capitalize md:text-3xl lg:text-4xl font-bold 2xl:text-5xl mt-3">
                     {course?.title}
                 </h3>
                 <p className="mt-3 text-gray-600 text-sm">
@@ -27,8 +27,8 @@ const CourseDetails = ({course}) => {
                             className="w-[40px] h-[40px] rounded-full"
                             src={course?.instructor?.profilePicture}
                             alt={course?.instructor?.firstName}
-                            width={20}
-                            height={20}
+                            width={80}
+                            height={80}
                         />
                         <p className="font-bold">{course?.instructor?.firstName} { ' '} {course?.instructor?.lastName}</p>
                     </div>

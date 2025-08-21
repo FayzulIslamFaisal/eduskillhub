@@ -22,6 +22,7 @@ model User {
   bio            String
   socialMedia    String[] @default([])
   profilePicture String?
+  designation    String?
   role           Role     @default(USER)
   // one-to-Many relation via join table
   coursesTeaching Course[]
@@ -40,6 +41,8 @@ model Course {
   quizzes     String[] @default([])
   active      Boolean    @default(true)
   price       Int
+  subtitle    String?
+  learning    String[] @default([])
 
   testimonial Testimonial[]
   modules     Module[]

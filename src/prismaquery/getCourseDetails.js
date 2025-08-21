@@ -7,17 +7,27 @@ export default async function getCourseDetails(id) {
         select: {
             id: true,
             title: true,
-            // subtitle: true,
+            subtitle: true,
+            learning: true,
             thumbnail: true,
             description: true,
             price: true,
             active: true,
             quizzes: true,
+            updatedAt: true,
             testimonial: {
                 select: {
                     id: true,
                     rating: true,
                     comment: true,
+                    user: {
+                        select: {
+                            id: true,
+                            profilePicture: true,
+                            firstName: true,
+                            lastName: true
+                        },
+                    },
                 },
             },
             modules: {
@@ -35,6 +45,18 @@ export default async function getCourseDetails(id) {
                     title: true,
                     thumbnail: true,
                     description: true
+                },
+            },
+            instructor: {
+                select: {
+                    id: true,
+                    firstName: true,
+                    lastName: true,
+                    email: true,
+                    phoneNumber: true,
+                    bio: true,
+                    profilePicture: true,
+                    socialMedia: true
                 },
             },
         }
