@@ -25,6 +25,7 @@ model User {
   designation    String?
   role           Role     @default(USER)
   // one-to-Many relation via join table
+  coursesEnrolled Enrollment[]
   coursesTeaching Course[]
   testimonial Testimonial[]
 
@@ -43,8 +44,9 @@ model Course {
   price       Int
   subtitle    String?
   learning    String[] @default([])
-  duration Int
+  duration    Int?
 
+  enrollments Enrollment[]
   testimonial Testimonial[]
   modules     Module[]
   instructorId String    @db.ObjectId
@@ -95,4 +97,27 @@ model Module {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Enrollment {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  status    Boolean  @default(false)
+  completion_date DateTime?
+  enrollment_date DateTime @default(now())
+  method    EnrollmentMethod  @default(CASH)
+  
+  courseId  String   @db.ObjectId
+  course    Course   @relation(fields: [courseId], references: [id])
+  studentId String   @db.ObjectId
+  student   User     @relation(fields: [studentId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum EnrollmentMethod {
+  CARD
+  BKASH
+  MANUAL
+  CASH
 }

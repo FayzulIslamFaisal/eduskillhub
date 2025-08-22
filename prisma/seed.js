@@ -1,26 +1,24 @@
-import { PrismaClient, Role } from '@prisma/client';
+import { PrismaClient, Role, EnrollmentMethod } from '@prisma/client';
 import { faker } from '@faker-js/faker';
 
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log('Starting seed process...');
+  console.log('🚀 Starting seed process...');
 
-  // Clear existing data (in correct order to respect foreign key constraints)
+  // ----------------- Clear DB -----------------
   await prisma.testimonial.deleteMany();
+  await prisma.enrollment.deleteMany();
   await prisma.module.deleteMany();
   await prisma.course.deleteMany();
   await prisma.category.deleteMany();
   await prisma.user.deleteMany();
+  console.log('🗑 Database cleared successfully!');
 
-  console.log('Cleared existing data');
-
-  // Create users
+  // ----------------- Users -----------------
   const users = [];
   for (let i = 0; i < 30; i++) {
-    const role = i === 0 ? Role.ADMIN : 
-                i < 10 ? Role.INSTRUCTOR : Role.USER;
-    
+    const role = i === 0 ? Role.ADMIN : i < 10 ? Role.INSTRUCTOR : Role.USER;
     const user = await prisma.user.create({
       data: {
         firstName: faker.person.firstName(),
@@ -28,31 +26,21 @@ async function main() {
         email: faker.internet.email(),
         password: faker.internet.password(),
         phoneNumber: faker.phone.number(),
-        bio: faker.person.bio(),
+        bio: faker.lorem.paragraph(),
         socialMedia: Array.from({ length: 3 }, () => faker.internet.url()),
         profilePicture: faker.image.avatar(),
         role,
       },
     });
     users.push(user);
-    console.log(`Created user ${i + 1}/30`);
   }
 
-  // Create categories
+  // ----------------- Categories -----------------
   const categories = [];
   const categoryTitles = [
-    'Web Development',
-    'Data Science',
-    'Mobile Development',
-    'Design',
-    'Business',
-    'Marketing',
-    'Photography',
-    'Music',
-    'Health & Fitness',
-    'Languages'
+    'Web Development', 'Data Science', 'Mobile Development', 'Design', 'Business',
+    'Marketing', 'Photography', 'Music', 'Health & Fitness', 'Languages'
   ];
-
   for (let i = 0; i < 10; i++) {
     const category = await prisma.category.create({
       data: {
@@ -62,36 +50,35 @@ async function main() {
       },
     });
     categories.push(category);
-    console.log(`Created category ${i + 1}/10`);
   }
 
-  // Create courses
+  // ----------------- Courses -----------------
   const courses = [];
-  const instructors = users.filter(user => user.role === Role.INSTRUCTOR);
-
-  for (let i = 0; i < 10; i++) {
+  const instructors = users.filter(u => u.role === Role.INSTRUCTOR);
+  for (let i = 0; i < 15; i++) {
     const course = await prisma.course.create({
       data: {
-        title: faker.company.buzzVerb() + ' ' + faker.company.buzzNoun(),
+        title: faker.company.catchPhrase(),
         description: faker.lorem.paragraphs(3),
         thumbnail: faker.image.url(),
         active: faker.datatype.boolean(),
         price: faker.number.int({ min: 20, max: 200 }),
+        subtitle: faker.company.catchPhrase(),
+        learning: Array.from({ length: 4 }, () => faker.lorem.sentence()),
+        duration: faker.number.int({ min: 30, max: 200 }),
+        quizzes: Array.from({ length: 3 }, () => faker.lorem.slug()),
         instructorId: instructors[faker.number.int({ min: 0, max: instructors.length - 1 })].id,
         categoryId: categories[faker.number.int({ min: 0, max: categories.length - 1 })].id,
-        quizzes: Array.from({ length: 3 }, () => faker.lorem.slug()),
       },
     });
     courses.push(course);
-    console.log(`Created course ${i + 1}/10`);
   }
 
-  // Create modules
-  const modules = [];
-  for (let i = 0; i < 10; i++) {
-    const module = await prisma.module.create({
+  // ----------------- Modules -----------------
+  for (let i = 0; i < 30; i++) {
+    await prisma.module.create({
       data: {
-        title: faker.company.buzzVerb() + ' ' + faker.company.buzzNoun(),
+        title: faker.company.name(),
         description: faker.lorem.paragraph(),
         status: faker.datatype.boolean(),
         slug: faker.lorem.slug(),
@@ -99,31 +86,40 @@ async function main() {
         courseId: courses[faker.number.int({ min: 0, max: courses.length - 1 })].id,
       },
     });
-    modules.push(module);
-    console.log(`Created module ${i + 1}/10`);
   }
 
-  // Create testimonials
-  for (let i = 0; i < 10; i++) {
+  // ----------------- Enrollments -----------------
+  const students = users.filter(u => u.role === Role.USER);
+  for (let i = 0; i < 40; i++) {
+    await prisma.enrollment.create({
+      data: {
+        status: faker.datatype.boolean(),
+        completion_date: faker.datatype.boolean() ? faker.date.recent({ days: 30 }) : null,
+        enrollment_date: faker.date.recent({ days: 60 }),
+        method: faker.helpers.arrayElement([
+          EnrollmentMethod.CARD, EnrollmentMethod.BKASH, EnrollmentMethod.MANUAL, EnrollmentMethod.CASH
+        ]),
+        courseId: courses[faker.number.int({ min: 0, max: courses.length - 1 })].id,
+        studentId: students[faker.number.int({ min: 0, max: students.length - 1 })].id,
+      },
+    });
+  }
+
+  // ----------------- Testimonials -----------------
+  for (let i = 0; i < 20; i++) {
     await prisma.testimonial.create({
       data: {
         rating: faker.number.int({ min: 1, max: 5 }),
         comment: faker.lorem.sentence(),
-        userId: users[faker.number.int({ min: 0, max: users.length - 1 })].id,
+        userId: students[faker.number.int({ min: 0, max: students.length - 1 })].id,
         courseId: courses[faker.number.int({ min: 0, max: courses.length - 1 })].id,
       },
     });
-    console.log(`Created testimonial ${i + 1}/10`);
   }
 
-  console.log('Seed data created successfully!');
+  console.log('✅ Seed data created successfully!');
 }
 
 main()
-  .catch((e) => {
-    console.error(e);
-    process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
+  .catch((e) => { console.error(e); process.exit(1); })
+  .finally(async () => { await prisma.$disconnect(); });

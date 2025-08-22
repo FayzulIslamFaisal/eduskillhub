@@ -2,18 +2,19 @@ import { Presentation } from "lucide-react";
 import { UsersRound } from "lucide-react";
 import { MessageSquare } from "lucide-react";
 import { Star } from "lucide-react";
-
-// import { getCourseDetailsByInstructor } from "@/queries/courses";
+import  getCourseDetailsByInstructor  from "@/prismaquery/getCourseDetailsByInstructor";
+import GetEnrollmentForCourse from "@/prismaquery/getEnrollment";
 
 const CourseInstructor = async ({course}) => {
     const instructor = course?.instructor;
-    console.log("instructor===>", instructor);
-    
+    // console.log("course===>", course);
+    const courseDetailsByInstructor = await getCourseDetailsByInstructor(instructor.id.toString());
+    // console.log("courseDetailsByInstructor===>", courseDetailsByInstructor);
+    const enrollmentDetails = await GetEnrollmentForCourse(course.id.toString());
+    console.log("enrollmentDetails===>", enrollmentDetails);
 
     const fullName = `${instructor?.firstName}  ${instructor?.lastName}`;
-    // const courseDetailsByInstructor = await getCourseDetailsByInstructor(instructor._id.toString());
-
-    // console.log(courseDetailsByInstructor)
+  
 
 
     return (
@@ -37,8 +38,7 @@ const CourseInstructor = async ({course}) => {
                         <ul className="list space-y-4">
                             <li className="flex items-center space-x-3">
                                 <Presentation className="text-gray-600" />
-                                {/* <div>{courseDetailsByInstructor?.courses} Course(s)</div> */}
-                                <div> Course(s)</div>
+                                <div> {courseDetailsByInstructor?.length} Course(s)</div>
                             </li>
                             <li className="flex space-x-3">
                                 <UsersRound className="text-gray-600" />
