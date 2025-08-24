@@ -4,6 +4,41 @@ export default async function GetEnrollmentForCourse(courseId) {
     where: {
         courseId: courseId,
     },
+    select:{
+        id: true,
+        status: true,
+        completion_date: true,
+        enrollment_date: true,
+        method: true,
+        student: {
+            select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+                email: true,
+                profilePicture: true,
+                phoneNumber: true,
+                designation: true,
+                bio: true,
+                socialMedia: true,
+                role: true,
+            }
+        },
+        course: {
+            select: {
+                id: true,
+                title: true,
+                subtitle: true,
+                thumbnail: true,
+                price: true,
+                duration: true,
+                learning: true,
+                active: true,
+                quizzes: true,
+
+            }
+        }
+    }
   });
   return {
     enrollments,

@@ -4,14 +4,16 @@ import { MessageSquare } from "lucide-react";
 import { Star } from "lucide-react";
 import  getCourseDetailsByInstructor  from "@/prismaquery/getCourseDetailsByInstructor";
 import GetEnrollmentForCourse from "@/prismaquery/getEnrollment";
+import getCourses from "@/prismaquery/course";
 
 const CourseInstructor = async ({course}) => {
     const instructor = course?.instructor;
-    // console.log("course===>", course);
+
     const courseDetailsByInstructor = await getCourseDetailsByInstructor(instructor.id.toString());
-    // console.log("courseDetailsByInstructor===>", courseDetailsByInstructor);
     const enrollmentDetails = await GetEnrollmentForCourse(course.id.toString());
-    console.log("enrollmentDetails===>", enrollmentDetails);
+    // console.log("enrollmentDetails===>", enrollmentDetails);
+    const totalEnrollments = await getCourses();
+    console.log("totalEnrollments===>", totalEnrollments);
 
     const fullName = `${instructor?.firstName}  ${instructor?.lastName}`;
   

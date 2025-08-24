@@ -11,7 +11,7 @@ const CourseDetails = ({course}) => {
     return (
         <section className="py-8 md:py-10 lg:py-14">
             <div className="container">
-                <span className="bg-success capitalize py-0.5 px-0.5 rounded-full text-xs font-medium inline-block text-white">
+                <span className="bg-green-600 capitalize py-2 px-2 rounded-full text-xs font-medium inline-block text-white">
                     {course?.category?.title}
                 </span>
                 <h3 className="text-2xl capitalize md:text-3xl lg:text-4xl font-bold 2xl:text-5xl mt-3">

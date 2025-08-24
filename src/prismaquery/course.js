@@ -21,7 +21,9 @@ const getCourses = async () => {
         category: {
           select: { id: true, title: true },
         },
+        _count: { select: { enrollments: true } },
       },
+      
     }),
 
     prisma.course.count(), 
