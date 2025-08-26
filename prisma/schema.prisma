@@ -19,7 +19,6 @@ model User {
   email          String   @unique
   password       String
   phoneNumber    String  
-  phoneNumber            String
   socialMedia    String[] @default([])
   profilePicture String?
   designation    String?
