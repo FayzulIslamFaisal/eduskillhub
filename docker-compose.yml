@@ -1,3 +1,4 @@
+
 services:
   eduskillhubfrontend:
     build:
@@ -8,6 +9,8 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - .:/app
-      - /app/node_modules
+      - .:/app                # Mount project for live reload
+      - /app/node_modules     # Keep container node_modules separate
+    env_file:
+      - .env
     command: ["npm", "run", "dev"]
