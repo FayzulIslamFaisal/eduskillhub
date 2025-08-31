@@ -19,7 +19,6 @@ export default async function GetEnrollmentForCourse(courseId) {
                 profilePicture: true,
                 phoneNumber: true,
                 designation: true,
-                bio: true,
                 socialMedia: true,
                 role: true,
             }

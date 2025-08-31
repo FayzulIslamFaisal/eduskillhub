@@ -8,10 +8,10 @@ import getCourses from "@/prismaquery/course";
 
 const CourseInstructor = async ({course}) => {
     const instructor = course?.instructor;
-
-    const courseDetailsByInstructor = await getCourseDetailsByInstructor(instructor.id.toString());
-    const enrollmentDetails = await GetEnrollmentForCourse(course.id.toString());
+    const courseDetailsByInstructor = await getCourseDetailsByInstructor(instructor.id);
+    const enrollmentDetails = await GetEnrollmentForCourse(course.id);
     // console.log("enrollmentDetails===>", enrollmentDetails);
+
     const totalEnrollments = await getCourses();
     console.log("totalEnrollments===>", totalEnrollments);
 
@@ -43,7 +43,7 @@ const CourseInstructor = async ({course}) => {
                             <li className="flex space-x-3">
                                 <UsersRound className="text-gray-600" />
                                 {/* <div>{courseDetailsByInstructor?.enrollments} Student Learned</div> */}
-                                <div> Student Learned</div>
+                                <div> {courseDetailsByInstructor?.courses[0]?.totalEnrollments} Student Learned</div>
                             </li>
                             <li className="flex space-x-3">
                                 <MessageSquare className="text-gray-600" />

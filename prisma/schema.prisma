@@ -22,6 +22,7 @@ model User {
   socialMedia    String[] @default([])
   profilePicture String?
   designation    String?
+  bio            String?
   role           Role     @default(USER)
   // one-to-Many relation via join table
   coursesEnrolled Enrollment[]

@@ -54,7 +54,6 @@ export default async function getCourseDetails(id) {
                     lastName: true,
                     email: true,
                     phoneNumber: true,
-                    bio: true,
                     profilePicture: true,
                     socialMedia: true,
                     designation:true
