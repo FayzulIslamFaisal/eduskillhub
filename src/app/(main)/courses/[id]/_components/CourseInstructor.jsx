@@ -17,8 +17,6 @@ const CourseInstructor = async ({course}) => {
 
     const fullName = `${instructor?.firstName}  ${instructor?.lastName}`;
   
-
-
     return (
         <div className="bg-gray-50 rounded-md p-8">
             <div className="md:flex md:gap-x-5 mb-8">
