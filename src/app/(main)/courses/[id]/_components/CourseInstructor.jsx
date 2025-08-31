@@ -11,9 +11,9 @@ const CourseInstructor = async ({course}) => {
     const courseDetailsByInstructor = await getCourseDetailsByInstructor(instructor.id);
     const enrollmentDetails = await GetEnrollmentForCourse(course.id);
     // console.log("enrollmentDetails===>", enrollmentDetails);
+    console.log("courseDetailsByInstructor===>", courseDetailsByInstructor);
 
     const totalEnrollments = await getCourses();
-    console.log("totalEnrollments===>", totalEnrollments);
 
     const fullName = `${instructor?.firstName}  ${instructor?.lastName}`;
   
@@ -38,7 +38,7 @@ const CourseInstructor = async ({course}) => {
                         <ul className="list space-y-4">
                             <li className="flex items-center space-x-3">
                                 <Presentation className="text-gray-600" />
-                                <div> {courseDetailsByInstructor?.length} Course(s)</div>
+                                <div> {courseDetailsByInstructor?.totalCourses} Course(s)</div>
                             </li>
                             <li className="flex space-x-3">
                                 <UsersRound className="text-gray-600" />
@@ -48,12 +48,12 @@ const CourseInstructor = async ({course}) => {
                             <li className="flex space-x-3">
                                 <MessageSquare className="text-gray-600" />
                                 {/* <div>{courseDetailsByInstructor?.reviews} Reviews</div> */}
-                                <div> Reviews</div>
+                                <div> {courseDetailsByInstructor?.totalReviews} Reviews</div>
                             </li>
                             <li className="flex space-x-3">
                                 <Star className="text-gray-600" />
                                 {/* <div>{courseDetailsByInstructor?.ratings} Average Rating</div> */}
-                                <div> Average Rating</div>
+                                <div> {courseDetailsByInstructor?.overallAverageRating.toFixed(1)} Average Rating</div>
                             </li>
                         </ul>
                     </div>
