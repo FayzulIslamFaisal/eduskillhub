@@ -21,6 +21,7 @@ export default async function GetEnrollmentForCourse(courseId) {
                 designation: true,
                 socialMedia: true,
                 role: true,
+                bio: true,
             }
         },
         course: {
@@ -34,7 +35,6 @@ export default async function GetEnrollmentForCourse(courseId) {
                 learning: true,
                 active: true,
                 quizzes: true,
-
             }
         }
     }

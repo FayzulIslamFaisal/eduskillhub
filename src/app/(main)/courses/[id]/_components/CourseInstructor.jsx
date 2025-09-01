@@ -11,7 +11,7 @@ const CourseInstructor = async ({course}) => {
     const courseDetailsByInstructor = await getCourseDetailsByInstructor(instructor.id);
     const enrollmentDetails = await GetEnrollmentForCourse(course.id);
     // console.log("enrollmentDetails===>", enrollmentDetails);
-    console.log("courseDetailsByInstructor===>", courseDetailsByInstructor);
+    // console.log("courseDetailsByInstructor===>", courseDetailsByInstructor);
 
     const totalEnrollments = await getCourses();
 

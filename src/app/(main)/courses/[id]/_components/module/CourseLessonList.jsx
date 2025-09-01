@@ -2,9 +2,11 @@ import { Tv } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 // import { getLesson } from "@/queries/lessons";
+import { getLesson } from "@/prismaquery/lessons";
 
 const CourseLessonList = async ({lessonId}) => {
-    // const lesson = await getLesson(lessonId);
+    const lesson = await getLesson(lessonId);
+
     return (
         <button
             type="button"
@@ -14,8 +16,9 @@ const CourseLessonList = async ({lessonId}) => {
         >
             <div className="flex items-center gap-x-2">
                 <Tv size={16} className={cn("text-slate-500")} />
-                {lesson?.title}
+                {lesson?.title} 
             </div>
+            
         </button>
     );
 };

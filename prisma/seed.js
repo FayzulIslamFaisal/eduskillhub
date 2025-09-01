@@ -9,6 +9,7 @@ async function main() {
   // ----------------- Clear DB -----------------
   await prisma.testimonial.deleteMany();
   await prisma.enrollment.deleteMany();
+  await prisma.lesson.deleteMany(); // Added lesson deletion
   await prisma.module.deleteMany();
   await prisma.course.deleteMany();
   await prisma.category.deleteMany();
@@ -75,15 +76,47 @@ async function main() {
   }
 
   // ----------------- Modules -----------------
+  const modules = [];
   for (let i = 0; i < 30; i++) {
-    await prisma.module.create({
+    const module = await prisma.module.create({
       data: {
         title: faker.company.name(),
         description: faker.lorem.paragraph(),
         status: faker.datatype.boolean(),
         slug: faker.lorem.slug(),
-        lessonIds: Array.from({ length: 5 }, () => faker.string.uuid()),
         courseId: courses[faker.number.int({ min: 0, max: courses.length - 1 })].id,
+      },
+    });
+    modules.push(module);
+  }
+
+  // ----------------- Lessons -----------------
+  for (let i = 0; i < 100; i++) {
+    const module = modules[faker.number.int({ min: 0, max: modules.length - 1 })];
+    
+    await prisma.lesson.create({
+      data: {
+        title: faker.company.buzzPhrase(),
+        description: faker.lorem.paragraph(),
+        duration: faker.number.int({ min: 5, max: 60 }),
+        video_Url: faker.internet.url(),
+        published: faker.datatype.boolean(),
+        slug: faker.lorem.slug(),
+        access: faker.helpers.arrayElement(['FREE', 'PAID', 'PREMIUM']),
+        moduleId: module.id,
+      },
+    });
+  }
+
+  // Update modules with lesson IDs
+  const allLessons = await prisma.lesson.findMany();
+  for (const module of modules) {
+    const moduleLessons = allLessons.filter(lesson => lesson.moduleId === module.id);
+    
+    await prisma.module.update({
+      where: { id: module.id },
+      data: {
+        lessonIds: moduleLessons.map(lesson => lesson.id),
       },
     });
   }

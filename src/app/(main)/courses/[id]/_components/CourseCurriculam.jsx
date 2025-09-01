@@ -19,10 +19,10 @@ import {
   import { cn } from "@/lib/utils";
 
   import CourseModuleList from "./module/CourseModuleList";
+import { Fragment } from "react";
 
-const CourseCurriculam = ({course}) => {
-    const totalDuration = course?.modules.reduce(function (acc, obj) { return acc + obj.duration; }, 0);
-    
+const CourseCurriculam = async({course}) => {
+
     return (
         <>
             <div className="flex gap-x-5 items-center justify-center flex-wrap mt-4 mb-6 text-gray-600 text-sm">
@@ -32,7 +32,7 @@ const CourseCurriculam = ({course}) => {
                 </span>
                 <span className="flex items-center gap-1.5">
                     <Clock10 className="w-4 h-4" />
-                    {(totalDuration/60).toPrecision(2)} Hours
+                    {course?.duration} Hours
                 </span>
             </div>
 
@@ -44,14 +44,11 @@ const CourseCurriculam = ({course}) => {
         >
             {course?.modules &&
             course.modules.map((module) => (
-                <AccordionItem key={module.id} value={`module-${module.id}`}>
-                <AccordionTrigger className=" py-1 capitalize text-lg px-3 inline">{module?.title}</AccordionTrigger>
-                <AccordionContent>
-                    <p>{module.description}</p>
-                    {/* যদি চাইলে এখানে CourseModuleList ব্যবহার করতে পারো */}
-                    {/* <CourseModuleList module={module} /> */}
-                </AccordionContent>
-                </AccordionItem>
+                <Fragment key={module.id}>
+                {/* <p>{module?.title}</p> */}
+                <CourseModuleList module={module} key={module.id} />
+                </Fragment>
+
             ))}
         </Accordion>
         </>
