@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 
 export const POST = async (request) => {
   try {
-    const { firstName, lastName, email, password, userRole } = await request.json();
+    const { firstName, lastName, email, password, role: userRole } = await request.json();
 
     // Validate required fields
     if (!firstName || !lastName || !email || !password) {
@@ -36,9 +36,10 @@ export const POST = async (request) => {
         lastName,
         email,
         password: hashedPassword,
-        userRole: userRole || "USER", // default role if not provided
+        role: userRole, // default role if not provided
       },
     });
+    console.log("User created successfully:", user);
 
     // Do not return password
     const { password: _, ...userWithoutPassword } = user;

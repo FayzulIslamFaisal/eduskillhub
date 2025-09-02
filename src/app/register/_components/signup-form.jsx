@@ -28,8 +28,14 @@ export function SignupForm({role}) {
       const lastName = formData.get("lastName");
       const email = formData.get('email');
       const password = formData.get('password');
+      const confirmPassword = formData.get("confirmPassword");
 
-      const userRole = ((role === "student") || (role === "instructor")) ? role : "student";
+      if (password !== confirmPassword) {
+        alert("Passwords do not match");
+        return;
+      }
+
+      const userRole = (role === "student") ? "STUDENT" : (role === "instructor") ? "INSTRUCTOR" : "USER";
 
       const response = await fetch("/api/register", {
         method: "POST",
@@ -45,10 +51,17 @@ export function SignupForm({role}) {
         })
       });
 
-      response.status === 201 && router.push("/login");
+      if (response.status === 201) {
+        router.push("/login");
+      } else {
+        const data = await response.json();
+        alert(data.message || "Failed to register");
+      }
+
+      console.log("Response:", response);
 
     } catch(e){
-      console.log(e.message);
+      console.log("Error:", e.message);
     }
   }
 

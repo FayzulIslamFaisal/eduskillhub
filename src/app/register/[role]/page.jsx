@@ -1,6 +1,7 @@
 import { SignupForm } from "../_components/signup-form";
 
-const RegisterPage = ({params: {role}}) => {
+const RegisterPage = ({params}) => {
+  const { role } = params;
   return (
     <div className="w-full flex-col h-screen flex items-center justify-center">
       <div className="container">
