@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 
 export function SignupForm({role}) {
   const router = useRouter();
+console.log("Role in SignupForm---->>:", role);
 
   async function onSubmit(event) {
     event.preventDefault();
@@ -35,7 +36,7 @@ export function SignupForm({role}) {
         return;
       }
 
-      const userRole = (role === "student") ? "STUDENT" : (role === "instructor") ? "INSTRUCTOR" : "USER";
+      const role = (role === "student") ? "STUDENT" : (role === "instructor") ? "INSTRUCTOR" : "USER";
 
       const response = await fetch("/api/register", {
         method: "POST",
@@ -47,7 +48,7 @@ export function SignupForm({role}) {
           lastName,
           email,
           password,
-          userRole
+          role
         })
       });
 
@@ -104,7 +105,7 @@ export function SignupForm({role}) {
               <Label htmlFor="confirmPassword">Confirm Password</Label>
               <Input id="confirmPassword" name="confirmPassword" type="password" />
             </div>
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full cursor-pointer">
               Create an account
             </Button>
           </div>
