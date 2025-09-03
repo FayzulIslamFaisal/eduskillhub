@@ -13,10 +13,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-import { ceredntialLogin } from "@/app/actions";
+
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { credentialLogin } from "@/app/actions";
 
 export function LoginForm() {
 
@@ -28,7 +29,7 @@ export function LoginForm() {
 
     try {
       const formData = new FormData(event.currentTarget);
-      const response = await ceredntialLogin(formData);
+      const response = await credentialLogin(formData);
 
       if (!!response.error) {
         console.error(response.error)
@@ -68,7 +69,7 @@ export function LoginForm() {
               </div>
               <Input id="password" name="password" type="password" required />
             </div>
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full cursor-pointer">
               Login
             </Button>
           </div>
