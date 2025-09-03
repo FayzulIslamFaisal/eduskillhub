@@ -1,20 +1,19 @@
-"use client";
+// src/app/actions/index.js
+
+
+"use client"; // important
 
 import { signIn } from "next-auth/react";
 
 export async function credentialLogin(formData) {
-  try {
-    const email = formData.get("email");
-    const password = formData.get("password");
+  const email = formData.get("email");
+  const password = formData.get("password");
 
-    const response = await signIn("credentials", {
-      email,
-      password,
-      redirect: false // or any page after login
-    });
+  const response = await signIn("credentials", {
+    redirect: false,  // prevent NextAuth from auto-redirecting
+    email,
+    password,
+  });
 
-    return response;
-  } catch (error) {
-    throw new Error(error.message || "Login failed");
-  }
+  return response;
 }
