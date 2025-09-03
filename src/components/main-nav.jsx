@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
@@ -9,6 +9,7 @@ import { Logo } from "./logo";
 import { X } from "lucide-react";
 import { Button, buttonVariants } from "./ui/button";
 import { Menu } from "lucide-react";
+import { useSession } from "next-auth/react";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -18,6 +19,24 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 export function MainNav({ items, children }) {
 	const [showMobileMenu, setShowMobileMenu] = useState(false);
+	const [loginSession, setLoginSession] = useState(null);
+	const { data: session, status } = useSession();
+	console.log("session===", session, status);
+	console.log("loginSession===", loginSession);
+
+
+	useEffect(() => {
+		if (status === "authenticated") {
+		// store session data in local state
+		setLoginSession(session);
+		} else {
+		setLoginSession(null); // clear session if unauthenticated
+		}
+	}, [session, status]);
+
+  if (status === "loading") return <p className=" text-2xl text-center font-black">Loading...</p>;
+  if (status === "unauthenticated") return <p>Not logged in</p>;
+	
 
 	return (
 		<>
@@ -45,7 +64,8 @@ export function MainNav({ items, children }) {
 				)}
 			</div>
 			<nav className="flex items-center gap-3">
-				<div className="items-center gap-3 hidden lg:flex">
+				{!loginSession && status !== "loading" && (
+					<div className="items-center gap-3 hidden lg:flex">
 					<Link
 						href="/login"
 						className={cn(buttonVariants({ size: "sm" }), "px-4")}>
@@ -67,6 +87,8 @@ export function MainNav({ items, children }) {
 						</DropdownMenuContent>
 					</DropdownMenu>
 				</div>
+				)}
+				
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
 						<div className="cursor-pointer">
