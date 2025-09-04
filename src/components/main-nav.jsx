@@ -9,7 +9,7 @@ import { Logo } from "./logo";
 import { X } from "lucide-react";
 import { Button, buttonVariants } from "./ui/button";
 import { Menu } from "lucide-react";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -33,9 +33,7 @@ export function MainNav({ items, children }) {
 	}, [session, status]);
 
   if (status === "loading") return <p className=" text-2xl text-center font-black">Loading...</p>;
-  if (status === "unauthenticated") return <p>Not logged in</p>;
 	
-
 	return (
 		<>
 			<div className="flex gap-6 lg:gap-10">
@@ -62,7 +60,7 @@ export function MainNav({ items, children }) {
 				)}
 			</div>
 			<nav className="flex items-center gap-3">
-				{!loginSession && status !== "loading" && (
+				{ status === "unauthenticated" && (
 					<div className="items-center gap-3 hidden lg:flex">
 					<Link
 						href="/login"
@@ -110,7 +108,7 @@ export function MainNav({ items, children }) {
 							<Link href="">Testimonials & Certificates</Link>
 						</DropdownMenuItem>
 						<DropdownMenuItem className="cursor-pointer" asChild>
-							<Link href="">Logout</Link>
+							<Link href="#" onClick={() => signOut()}>Logout</Link>
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>

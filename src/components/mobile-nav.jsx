@@ -10,9 +10,24 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Button, buttonVariants } from "./ui/button";
+import { signOut, useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 
 export default function MobileNav({ items, children }) {
   useLockBody();
+
+  const [loginSession, setLoginSession] = useState(null);
+    const { data: session, status } = useSession();
+  
+  
+    useEffect(() => {
+      if (status === "authenticated") {
+      // store session data in local state
+      setLoginSession(session);
+      } else {
+      setLoginSession(null); // clear session if unauthenticated
+      }
+    }, [session, status]);
 
   return (
     <div
@@ -35,7 +50,9 @@ export default function MobileNav({ items, children }) {
             </Link>
           ))}
         </nav>
-        <div className="items-center gap-3 flex lg:hidden">
+        {
+          status === "unauthenticated" && (
+          <div className="items-center gap-3 flex lg:hidden">
           <Link
             href="/login"
             className={cn(buttonVariants({ size: "sm" }), "px-4")}
@@ -58,6 +75,12 @@ export default function MobileNav({ items, children }) {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
+        )
+        }
+        {
+          status === "authenticated" && (<Link href="#" onClick={() => signOut()}>Logout</Link>)
+        }
+
         {children}
       </div>
     </div>
