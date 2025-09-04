@@ -21,8 +21,6 @@ export function MainNav({ items, children }) {
 	const [showMobileMenu, setShowMobileMenu] = useState(false);
 	const [loginSession, setLoginSession] = useState(null);
 	const { data: session, status } = useSession();
-	console.log("session===", session, status);
-	console.log("loginSession===", loginSession);
 
 
 	useEffect(() => {

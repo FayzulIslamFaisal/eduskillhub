@@ -19,9 +19,7 @@ import CourseCard from "./_components/CourseCard";
 
 const CoursesPage = async () => {
     // const courses = await getCourseList();
-    const {courses, totalCount} = await getCourses();
-    console.log("totalCount===>", totalCount, "courses===>", courses, );
-    
+    const {courses} = await getCourses();
 
     return (
         <section
